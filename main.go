@@ -2,7 +2,8 @@ package main
 
 import (
 	"log"
-	"scana-sdk-go/moderation"
+
+	"github.com/scanasdk/scana-sdk-go/moderation"
 )
 
 func main() {
