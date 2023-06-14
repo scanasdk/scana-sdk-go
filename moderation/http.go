@@ -88,7 +88,7 @@ func (client *moderationClient) doRequest(action, url, method string, data map[s
 		return nil, fmt.Errorf("%s response code:%d", action, resp.StatusCode)
 	}
 
-	doLog(LEVEL_DEBUG, "method finish %s elapsed:%d", action, (getCurrentTimeStamp() - start))
+	doLog(LEVEL_DEBUG, "method finished %s elapsed:%d", action, (getCurrentTimeStamp() - start))
 
 	return ioutil.ReadAll(resp.Body)
 
