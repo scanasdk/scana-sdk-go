@@ -7,12 +7,12 @@ import (
 )
 
 func main() {
-	mc, err := moderation.NewModerationClient("63632c7750689300010fe9aa", "5fe4d89d-5b22-11ed-b868-0242ac130015", "1733792053931827217", moderation.WithTimeout(10))
+	mc, err := moderation.NewModerationClient("appid", "secret", "businessId", moderation.WithTimeout(10))
 	if err != nil {
 		log.Println("new moderation client failure", err)
 		return
 	}
-	output, err := mc.TextModeration("我草泥马")
+	output, err := mc.TextModeration("Hello World")
 	if err != nil {
 		log.Println(err)
 		return
