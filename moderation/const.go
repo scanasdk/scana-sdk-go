@@ -1,7 +1,7 @@
 package moderation
 
 const (
-	MODERATION_DOMAIN = "http://dev-newkmsapi.qixincha.com"
+	MODERATION_DOMAIN = "https://newkmsapi.qixincha.com"
 )
 
 const (
