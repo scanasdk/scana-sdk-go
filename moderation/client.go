@@ -4,7 +4,6 @@ import "net/http"
 
 type moderationClient struct {
 	appid, secretKey string
-	textBusinessId   string // text audit business id
 	conf             *config
 	httpClient       *http.Client
 }
@@ -17,11 +16,10 @@ type moderationClient struct {
  * @returns {*TextModerationOutput} output 检测结果
  * @returns {error} err 错误消息
  */
-func NewModerationClient(appid, secretKey, textBusinessId string, configurers ...configurer) (*moderationClient, error) {
+func NewModerationClient(appid, secretKey string, configurers ...configurer) (*moderationClient, error) {
 	client := &moderationClient{
-		appid:          appid,
-		secretKey:      secretKey,
-		textBusinessId: textBusinessId,
+		appid:     appid,
+		secretKey: secretKey,
 	}
 
 	conf := &config{}

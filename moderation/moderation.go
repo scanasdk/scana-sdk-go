@@ -1,70 +1,47 @@
+// v3审核接口
 package moderation
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"errors"
 	"fmt"
 	"net/http"
-	"net/url"
-	"sort"
-	"strconv"
 )
 
-func (client *moderationClient) generateSignature() url.Values {
-	values := url.Values{}
-	values.Add("nonce", randomString(10))
-	values.Add("timestamp", strconv.Itoa(int(getCurrentTimeStamp())))
-	values.Add("appId", client.appid)
-	values.Add("businessId", client.textBusinessId)
-
-	var paramStr string
-	keys := make([]string, 0, len(values))
-	for k := range values {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	for _, key := range keys {
-		paramStr += key + values[key][0]
-	}
-	paramStr += client.secretKey
-
-	md5Reader := md5.New()
-	md5Reader.Write([]byte(paramStr))
-	values.Add("signature", hex.EncodeToString(md5Reader.Sum(nil)))
-
-	return values
-}
-
 /**
- * TextModeration 发送 HTTP GET请求
- * @param {string} text 待检测的文本，必传
- * @returns {*TextModerationOutput} output 检测结果
+ * TextSyncModeration 文本同步审核请求
+ * @param {TextSyncModerationInput} input 同步请求参数
+ * @param {string} businessId 文本业务id，必传
+ * @returns {*TextSyncModerationOutput} output 检测结果
  * @returns {error} err 错误消息
  */
-func (client *moderationClient) TextModeration(text string) (output *TextModerationOutput, err error) {
-	if text == "" {
-		return nil, errors.New("待检测文本不能为空")
+func (client *moderationClient) TextSyncModeration(input *TextSyncModerationInput) (output *TextSyncModerationOutput, err error) {
+	if input == nil {
+		return nil, errors.New("nil input")
 	}
 
 	body := map[string]interface{}{
-		"text":        text,
-		"business_id": client.textBusinessId,
+		"appId":      client.appid,
+		"secretKey":  client.secretKey,
+		"businessId": input.BusinessId,
+		"text":       input.Text,
+		"extra":      input.Extra,
 	}
 
+	doLog(LEVEL_DEBUG, "text sync moderation input:%+#v", body)
 	var resp struct {
-		Code int                  `json:"code"`
-		Msg  string               `json:"msg"`
-		Data TextModerationOutput `json:"data"`
+		Code int    `json:"code"`
+		Msg  string `json:"msg"`
+		TextSyncModerationOutput
 	}
-	if err := client.doPost("TextModeration", MODERATION_DOMAIN+"/kms-open/v2/openapi/synctextmoderation", body, client.generateSignature(), &resp); err != nil {
+	if err := client.doPost("TextSyncModeration", MODERATION_DOMAIN+"/v3/text/sync", body, nil /*no param*/, &resp); err != nil {
 		return nil, err
 	}
+	doLog(LEVEL_DEBUG, "text sync moderation output:%+#v", resp.TextSyncModerationOutput)
 
 	if resp.Code != http.StatusOK {
 		return nil, fmt.Errorf("text moderation request failure,response code:%d,msg:%s", resp.Code, resp.Msg)
 	}
-	output = &resp.Data
+	output = &resp.TextSyncModerationOutput
 
 	return output, nil
 }
