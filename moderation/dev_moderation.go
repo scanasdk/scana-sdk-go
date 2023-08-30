@@ -5,8 +5,6 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
-	"fmt"
-	"net/http"
 	"net/url"
 	"sort"
 	"strconv"
@@ -42,11 +40,12 @@ func (client *moderationClient) generateSignature(businessId string) url.Values 
  * @param {string} text 待检测的文本，必传
  * @param {string} businessId 文本业务id，必传
  * @returns {*TextModerationOutput} output 检测结果
+ * @returns {*APIResult} result 请求失败可以通过该返回判定状态码
  * @returns {error} err 错误消息
  */
-func (client *moderationClient) TextModeration(text string, businessId string) (output *TextModerationOutput, err error) {
+func (client *moderationClient) TextModeration(text string, businessId string) (output *TextModerationOutput, result *APIResult, err error) {
 	if text == "" {
-		return nil, errors.New("待检测文本不能为空")
+		return nil, nil, errors.New("待检测文本不能为空")
 	}
 
 	body := map[string]interface{}{
@@ -55,18 +54,15 @@ func (client *moderationClient) TextModeration(text string, businessId string) (
 	}
 
 	var resp struct {
-		Code int                  `json:"code"`
-		Msg  string               `json:"msg"`
+		APIResult
 		Data TextModerationOutput `json:"data"`
 	}
-	if err := client.doPost("TextModeration", MODERATION_DOMAIN+"/kms-open/v2/openapi/synctextmoderation", body, client.generateSignature(businessId), &resp); err != nil {
-		return nil, err
+	if result, err := client.doPost("TextModeration", MODERATION_DOMAIN+"/kms-open/v2/openapi/synctextmoderation", body, client.generateSignature(businessId), &resp); err != nil {
+		return nil, result, err
 	}
 
-	if resp.Code != http.StatusOK {
-		return nil, fmt.Errorf("text moderation request failure,response code:%d,msg:%s", resp.Code, resp.Msg)
-	}
 	output = &resp.Data
+	result = &resp.APIResult
 
-	return output, nil
+	return output, result, nil
 }

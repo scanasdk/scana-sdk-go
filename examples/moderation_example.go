@@ -13,7 +13,7 @@ func ExampleTextSyncModeration() {
 		log.Println("new moderation client failure", err)
 		return
 	}
-	output, err := mc.TextSyncModeration(&moderation.TextSyncModerationInput{
+	output, result, err := mc.TextSyncModeration(&moderation.TextSyncModerationInput{
 		Text: []moderation.Text{
 			{ContentId: "contentId", Data: "Hello World!"},
 		},
@@ -21,6 +21,9 @@ func ExampleTextSyncModeration() {
 		Extra:      "extra",
 	})
 	if err != nil {
+		if result != nil {
+			log.Printf("code:%d,message:%s", result.Code, result.Msg)
+		}
 		log.Println(err)
 		return
 	}

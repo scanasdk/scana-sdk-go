@@ -13,8 +13,12 @@ func ExampleDevTextModeration() {
 		log.Println("new moderation client failure", err)
 		return
 	}
-	output, err := mc.TextModeration("Hello World", "businessId")
+	output, result, err := mc.TextModeration("Hello World", "businessId")
 	if err != nil {
+		if result != nil {
+			log.Printf("code:%d,message:%s", result.Code, result.Msg)
+			return
+		}
 		log.Println(err)
 		return
 	}

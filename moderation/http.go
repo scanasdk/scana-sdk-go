@@ -17,13 +17,14 @@ import (
  * @returns {interface{}} receiver 解析响应的数据结构，请传递指针
  * @returns {error} err 错误消息
  */
-func (client *moderationClient) doGet(action, url string, params url.Values, receiver interface{}) error {
-	resp, err := client.doRequest(action, url, HTTP_GET, nil, params)
+func (client *moderationClient) doGet(action, url string, params url.Values, receiver interface{}) (*APIResult, error) {
+	resp, result, err := client.doRequest(action, url, HTTP_GET, nil, params)
 	if err != nil {
-		return err
+		return result, err
 	}
 
-	return json.Unmarshal(resp, receiver)
+	err = json.Unmarshal(resp, receiver)
+	return result, err
 }
 
 /**
@@ -35,13 +36,14 @@ func (client *moderationClient) doGet(action, url string, params url.Values, rec
  * @returns {interface{}} receiver 解析响应的数据结构，请传递指针
  * @returns {error} err 错误消息
  */
-func (client *moderationClient) doPost(action, url string, data map[string]interface{}, params url.Values, receiver interface{}) error {
-	resp, err := client.doRequest(action, url, HTTP_POST, data, params)
+func (client *moderationClient) doPost(action, url string, data map[string]interface{}, params url.Values, receiver interface{}) (*APIResult, error) {
+	resp, result, err := client.doRequest(action, url, HTTP_POST, data, params)
 	if err != nil {
-		return err
+		return result, err
 	}
 
-	return json.Unmarshal(resp, receiver)
+	err = json.Unmarshal(resp, receiver)
+	return result, err
 }
 
 /**
@@ -54,7 +56,7 @@ func (client *moderationClient) doPost(action, url string, data map[string]inter
  * @returns {[]byte} respData 响应消息字节数据
  * @returns {error} err 错误消息
  */
-func (client *moderationClient) doRequest(action, url, method string, data map[string]interface{}, params url.Values) (respData []byte, err error) {
+func (client *moderationClient) doRequest(action, url, method string, data map[string]interface{}, params url.Values) (respData []byte, result *APIResult, err error) {
 	doLog(LEVEL_INFO, "Enter method %s...", action)
 
 	start := getCurrentTimeStamp()
@@ -84,12 +86,17 @@ func (client *moderationClient) doRequest(action, url, method string, data map[s
 	}
 	defer resp.Body.Close()
 
+	result = &APIResult{
+		Code: resp.StatusCode,
+		Msg:  resp.Status,
+	}
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("%s response code:%d", action, resp.StatusCode)
+		return nil, result, fmt.Errorf("%s response code:%d", action, resp.StatusCode)
 	}
 
 	doLog(LEVEL_DEBUG, "method finished %s elapsed:%d", action, (getCurrentTimeStamp() - start))
 
-	return ioutil.ReadAll(resp.Body)
+	respData, err = ioutil.ReadAll(resp.Body)
+	return respData, result, err
 
 }
