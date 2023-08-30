@@ -6,5 +6,8 @@ import (
 
 func main() {
 	// examples.ExampleDevTextModeration()
-	examples.ExampleTextSyncModeration()
+	// examples.ExampleTextSyncModeration()
+	// examples.ExampleTextAsyncModeration()
+	// examples.ExampleImageSyncModeration()
+	examples.ExampleImageAsyncModeration()
 }

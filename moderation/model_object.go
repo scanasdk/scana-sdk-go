@@ -36,6 +36,20 @@ type ImageSyncModerationOutput struct {
 	Extra            string                  `json:"extra"`            // 透传字段
 }
 
+// 文本异步审核响应
+type TextAsyncModerationOutput struct {
+	ModerationType int    `json:"moderationType"` // 审核类型枚举
+	RequestId      string `json:"requestId"`      // 当次审核请求id
+	Extra          string `json:"extra"`          // 透传字段
+}
+
+// 图片异步审核响应
+type ImageAsyncModerationOutput struct {
+	ModerationType int    `json:"moderationType"` // 审核类型枚举
+	RequestId      string `json:"requestId"`      // 当次审核请求id
+	Extra          string `json:"extra"`          // 透传字段
+}
+
 // ===================================中间数据结构===================================
 type Text struct {
 	ContentId string `json:"contentId"` // 唯一id
