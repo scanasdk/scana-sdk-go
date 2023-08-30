@@ -7,12 +7,12 @@ import (
 
 /**
  * TextSyncModeration 文本同步审核请求
- * @param {*TextSyncModerationInput} input 同步请求参数
+ * @param {*TextModerationInput} input 同步请求参数
  * @returns {*TextSyncModerationOutput} output 检测结果
  * @returns {*APIResult} result 请求失败可以通过该返回判定状态码
  * @returns {error} err 错误消息
  */
-func (client *moderationClient) TextSyncModeration(input *TextSyncModerationInput) (output *TextSyncModerationOutput, result *APIResult, err error) {
+func (client *moderationClient) TextSyncModeration(input *TextModerationInput) (output *TextSyncModerationOutput, result *APIResult, err error) {
 	if input == nil {
 		return nil, nil, errors.New("nil input")
 	}
@@ -46,12 +46,12 @@ func (client *moderationClient) TextSyncModeration(input *TextSyncModerationInpu
 
 /**
  * ImageSyncModeration 图片同步审核请求
- * @param {*ImageSyncModerationInput} input 同步请求参数
+ * @param {*ImageModerationInput} input 同步请求参数
  * @returns {*ImageSyncModerationOutput} output 检测结果
  * @returns {*APIResult} result 请求失败可以通过该返回判定状态码
  * @returns {error} err 错误消息
  */
-func (client *moderationClient) ImageSyncModeration(input *ImageSyncModerationInput) (output *ImageSyncModerationOutput, result *APIResult, err error) {
+func (client *moderationClient) ImageSyncModeration(input *ImageModerationInput) (output *ImageSyncModerationOutput, result *APIResult, err error) {
 	if input == nil {
 		return nil, nil, errors.New("nil input")
 	}

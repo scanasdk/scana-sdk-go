@@ -6,8 +6,8 @@ type TextModerationOutput struct {
 	Score float64
 }
 
-// 文本同步审核请求
-type TextSyncModerationInput struct {
+// 文本审核请求
+type TextModerationInput struct {
 	Text       []Text `json:"text"`       // 文本请求内容
 	Extra      string `json:"extra"`      // 额外信息，会在响应/回调中返回
 	BusinessId string `json:"businessId"` // 文本业务id
@@ -21,8 +21,8 @@ type TextSyncModerationOutput struct {
 	Extra            string                 `json:"extra"`            // 透传字段
 }
 
-// 图片同步审核请求
-type ImageSyncModerationInput struct {
+// 图片审核请求
+type ImageModerationInput struct {
 	Images     []Image `json:"images"`     // 图片请求内容
 	Extra      string  `json:"extra"`      // 额外信息，会在响应/回调中返回
 	BusinessId string  `json:"businessId"` // 图片业务id
