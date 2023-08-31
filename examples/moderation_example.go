@@ -1,107 +1,81 @@
 package examples
 
 import (
+	"errors"
 	"log"
 
 	"github.com/scanasdk/scana-sdk-go/moderation"
 )
 
-// 同步文本审核接口
-func ExampleTextSyncModeration() {
-	mc, err := moderation.NewModerationClient("appId", "secret", moderation.WithTimeout(10))
+var (
+	ErrInput = errors.New("invalid input:审核类型与input不一致")
+)
+
+// 示例方法
+// ty:text/image/audio/video/doc
+// sync:true/false for image/text
+// input:输入参数 example:&TextModerationInput{}
+func ExampleModeration(appId string, secret string, ty string, sync bool, input interface{}) error {
+	mc, err := moderation.NewModerationClient(appId, secret, moderation.WithTimeout(10))
 	if err != nil {
 		log.Println("new moderation client failure", err)
-		return
+		return err
 	}
-	output, result, err := mc.TextSyncModeration(&moderation.TextModerationInput{
-		Text: []moderation.Text{
-			{ContentId: "contentId", Data: "Hello World!"},
-		},
-		BusinessId: "businessId",
-		Extra:      "extra",
-	})
+
+	var (
+		output interface{}
+		result *moderation.APIResult
+	)
+	switch ty {
+	case "text":
+		i, ok := input.(*moderation.TextModerationInput)
+		if !ok {
+			return ErrInput
+		}
+		if sync {
+			output, result, err = mc.TextSyncModeration(i)
+		} else {
+			output, result, err = mc.TextAsyncModeration(i)
+		}
+	case "image":
+		i, ok := input.(*moderation.ImageModerationInput)
+		if !ok {
+			return ErrInput
+		}
+		if sync {
+			output, result, err = mc.ImageSyncModeration(i)
+		} else {
+			output, result, err = mc.ImageAsyncModeration(i)
+		}
+	case "audio":
+		i, ok := input.(*moderation.AudioModerationInput)
+		if !ok {
+			return ErrInput
+		}
+		output, result, err = mc.AudioAsyncModeration(i)
+	case "video":
+		i, ok := input.(*moderation.VideoModerationInput)
+		if !ok {
+			return ErrInput
+		}
+		output, result, err = mc.VideoAsyncModeration(i)
+	case "doc":
+		i, ok := input.(*moderation.DocModerationInput)
+		if !ok {
+			return ErrInput
+		}
+		output, result, err = mc.DocAsyncModeration(i)
+	}
+
 	if err != nil {
 		if result != nil {
 			log.Printf("code:%d,message:%s", result.Code, result.Msg)
 		}
 		log.Println(err)
-		return
+		return err
 	}
 
-	log.Printf("output=== %+#v", *output)
-}
+	log.Printf("output=== %+#v", output)
 
-// 同步图片审核接口
-func ExampleImageSyncModeration() {
-	mc, err := moderation.NewModerationClient("appId", "secret", moderation.WithTimeout(10))
-	if err != nil {
-		log.Println("new moderation client failure", err)
-		return
-	}
-	output, result, err := mc.ImageSyncModeration(&moderation.ImageModerationInput{
-		Images: []moderation.Image{
-			{ContentId: "contentId", Data: "Hello World!"},
-		},
-		BusinessId: "businessId",
-		Extra:      "extra",
-	})
-	if err != nil {
-		if result != nil {
-			log.Printf("code:%d,message:%s", result.Code, result.Msg)
-		}
-		log.Println(err)
-		return
-	}
-
-	log.Printf("output=== %+#v", *output)
-}
-
-// 异步文本审核接口
-func ExampleTextAsyncModeration() {
-	mc, err := moderation.NewModerationClient("appId", "secret", moderation.WithTimeout(10))
-	if err != nil {
-		log.Println("new moderation client failure", err)
-		return
-	}
-	output, result, err := mc.TextAsyncModeration(&moderation.TextModerationInput{
-		Text: []moderation.Text{
-			{ContentId: "contentId", Data: "Hello World!"},
-		},
-		BusinessId: "businessId",
-		Extra:      "extra",
-	})
-	if err != nil {
-		if result != nil {
-			log.Printf("code:%d,message:%s", result.Code, result.Msg)
-		}
-		log.Println(err)
-		return
-	}
-
-	log.Printf("output=== %+#v", *output)
-}
-
-// 异步图片审核接口
-func ExampleImageAsyncModeration() {
-	mc, err := moderation.NewModerationClient("appId", "secret", moderation.WithTimeout(10))
-	if err != nil {
-		log.Println("new moderation client failure", err)
-		return
-	}
-	output, result, err := mc.ImageAsyncModeration(&moderation.ImageModerationInput{
-		Images: []moderation.Image{
-			{ContentId: "contentId", Data: "Hello World!"},
-		},
-		BusinessId: "businessId",
-		Extra:      "extra",
-	})
-	if err != nil {
-		if result != nil {
-			log.Printf("code:%d,message:%s", result.Code, result.Msg)
-		}
-		log.Println(err)
-		return
-	}
-
-	log.Printf("output=== %+#v", *output)
+	return nil
 }

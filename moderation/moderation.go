@@ -161,3 +161,132 @@ func (client *moderationClient) ImageAsyncModeration(input *ImageModerationInput
 
 	return output, result, nil
 }
+
+/**
+ * AudioAsyncModeration 音频异步审核请求
+ * @param {*AudioModerationInput} input 请求参数
+ * @returns {*AudioAsyncModerationOutput} output 检测结果
+ * @returns {*APIResult} result 请求失败可以通过该返回判定状态码
+ * @returns {error} err 错误消息
+ */
+func (client *moderationClient) AudioAsyncModeration(input *AudioModerationInput) (output *AudioAsyncModerationOutput, result *APIResult, err error) {
+	if input == nil {
+		return nil, nil, errors.New("nil input")
+	}
+	if input.BusinessId == "" {
+		return nil, nil, errors.New("businessId is not set")
+	}
+	if input.URL == "" {
+		return nil, nil, errors.New("url is not set")
+	}
+
+	body := map[string]interface{}{
+		"appId":      client.appid,
+		"secretKey":  client.secretKey,
+		"businessId": input.BusinessId,
+		"contentId":  input.ContentId,
+		"extra":      input.Extra,
+		"url":        input.URL,
+	}
+
+	doLog(LEVEL_DEBUG, "audio async moderation input:%+#v", body)
+	var resp struct {
+		APIResult
+		AudioAsyncModerationOutput
+	}
+	if result, err := client.doPost("AudioAsyncModeration", MODERATION_DOMAIN+"/v3/audio/async", body, nil /*no param*/, &resp); err != nil {
+		return nil, result, err
+	}
+	doLog(LEVEL_DEBUG, "audio async moderation output:%+#v", resp.AudioAsyncModerationOutput)
+
+	output = &resp.AudioAsyncModerationOutput
+	result = &resp.APIResult
+
+	return output, result, nil
+}
+
+/**
+ * VideoAsyncModeration 视频异步审核请求
+ * @param {*VideoModerationInput} input 请求参数
+ * @returns {*VideoAsyncModerationOutput} output 检测结果
+ * @returns {*APIResult} result 请求失败可以通过该返回判定状态码
+ * @returns {error} err 错误消息
+ */
+func (client *moderationClient) VideoAsyncModeration(input *VideoModerationInput) (output *VideoAsyncModerationOutput, result *APIResult, err error) {
+	if input == nil {
+		return nil, nil, errors.New("nil input")
+	}
+	if input.BusinessId == "" {
+		return nil, nil, errors.New("businessId is not set")
+	}
+	if input.URL == "" {
+		return nil, nil, errors.New("url is not set")
+	}
+
+	body := map[string]interface{}{
+		"appId":      client.appid,
+		"secretKey":  client.secretKey,
+		"businessId": input.BusinessId,
+		"contentId":  input.ContentId,
+		"extra":      input.Extra,
+		"url":        input.URL,
+	}
+
+	doLog(LEVEL_DEBUG, "video async moderation input:%+#v", body)
+	var resp struct {
+		APIResult
+		VideoAsyncModerationOutput
+	}
+	if result, err := client.doPost("VideoAsyncModeration", MODERATION_DOMAIN+"/v3/video/async", body, nil /*no param*/, &resp); err != nil {
+		return nil, result, err
+	}
+	doLog(LEVEL_DEBUG, "video async moderation output:%+#v", resp.VideoAsyncModerationOutput)
+
+	output = &resp.VideoAsyncModerationOutput
+	result = &resp.APIResult
+
+	return output, result, nil
+}
+
+/**
+ * DocAsyncModeration 文档异步审核请求
+ * @param {*DocModerationInput} input 请求参数
+ * @returns {*DocAsyncModerationOutput} output 检测结果
+ * @returns {*APIResult} result 请求失败可以通过该返回判定状态码
+ * @returns {error} err 错误消息
+ */
+func (client *moderationClient) DocAsyncModeration(input *DocModerationInput) (output *DocAsyncModerationOutput, result *APIResult, err error) {
+	if input == nil {
+		return nil, nil, errors.New("nil input")
+	}
+	if input.BusinessId == "" {
+		return nil, nil, errors.New("businessId is not set")
+	}
+	if input.URL == "" {
+		return nil, nil, errors.New("url is not set")
+	}
+
+	body := map[string]interface{}{
+		"appId":      client.appid,
+		"secretKey":  client.secretKey,
+		"businessId": input.BusinessId,
+		"contentId":  input.ContentId,
+		"extra":      input.Extra,
+		"url":        input.URL,
+	}
+
+	doLog(LEVEL_DEBUG, "doc async moderation input:%+#v", body)
+	var resp struct {
+		APIResult
+		DocAsyncModerationOutput
+	}
+	if result, err := client.doPost("DocAsyncModeration", MODERATION_DOMAIN+"/v3/doc/async", body, nil /*no param*/, &resp); err != nil {
+		return nil, result, err
+	}
+	doLog(LEVEL_DEBUG, "doc async moderation output:%+#v", resp.DocAsyncModerationOutput)
+
+	output = &resp.DocAsyncModerationOutput
+	result = &resp.APIResult
+
+	return output, result, nil
+}
