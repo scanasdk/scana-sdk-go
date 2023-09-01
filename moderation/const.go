@@ -7,6 +7,14 @@ const (
 )
 
 const (
+	CONTENT_TYPE_TEXT  = 1
+	CONTENT_TYPE_IMAGE = 2
+	CONTENT_TYPE_AUDIO = 3
+	CONTENT_TYPE_VIDEO = 4
+	CONTENT_TYPE_DOC   = 5
+)
+
+const (
 	DEFAULT_TIMEOUT           = 10 // default http timeout
 	DEFAULT_CONNECT_TIMEOUT   = 60
 	DEFAULT_HEADER_TIMEOUT    = 60
