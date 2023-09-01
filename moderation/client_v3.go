@@ -2,26 +2,17 @@ package moderation
 
 import "net/http"
 
-type moderationClient struct {
-	appid, secretKey string
-	textBusinessId   string // text audit business id
-	conf             *config
-	httpClient       *http.Client
-}
-
 /**
  * NewModerationClient 生成moderation client
  * @param {string} appid 调用凭证
  * @param {string} secretKey 调用凭证
- * @param {string} textBusinessId 文本审核的业务id
  * @returns {*TextModerationOutput} output 检测结果
  * @returns {error} err 错误消息
  */
-func NewModerationClient(appid, secretKey, textBusinessId string, configurers ...configurer) (*moderationClient, error) {
+func NewModerationClientV3(appid, secretKey string, configurers ...configurer) (*moderationClient, error) {
 	client := &moderationClient{
-		appid:          appid,
-		secretKey:      secretKey,
-		textBusinessId: textBusinessId,
+		appid:     appid,
+		secretKey: secretKey,
 	}
 
 	conf := &config{}

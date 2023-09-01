@@ -16,7 +16,7 @@ var (
 // sync:true/false for image/text
 // input:输入参数 example:&TextModerationInput{}
 func ExampleModeration(appId string, secret string, ty string, sync bool, input interface{}) error {
-	mc, err := moderation.NewModerationClient(appId, secret, moderation.WithTimeout(10))
+	mc, err := moderation.NewModerationClientV3(appId, secret, moderation.WithTimeout(10))
 	if err != nil {
 		log.Println("new moderation client failure", err)
 		return err
