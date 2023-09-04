@@ -33,7 +33,7 @@ func (client *moderationClient) TextSyncModeration(input *TextModerationInput) (
 		APIResult
 		TextSyncModerationOutput
 	}
-	if result, err := client.doPost("TextSyncModeration", MODERATION_DOMAIN+"/v3/text/sync", body, nil /*no param*/, &resp); err != nil {
+	if result, err := client.doPost("TextSyncModeration", MODERATION_DOMAIN+"/kms-open/v3/text/sync", body, nil /*no param*/, &resp); err != nil {
 		return nil, result, err
 	}
 	doLog(LEVEL_DEBUG, "text sync moderation output:%+#v", resp.TextSyncModerationOutput)
@@ -72,7 +72,7 @@ func (client *moderationClient) ImageSyncModeration(input *ImageModerationInput)
 		APIResult
 		ImageSyncModerationOutput
 	}
-	if result, err := client.doPost("ImageSyncModeration", MODERATION_DOMAIN+"/v3/image/sync", body, nil /*no param*/, &resp); err != nil {
+	if result, err := client.doPost("ImageSyncModeration", MODERATION_DOMAIN+"/kms-open/v3/image/sync", body, nil /*no param*/, &resp); err != nil {
 		return nil, result, err
 	}
 	doLog(LEVEL_DEBUG, "image sync moderation output:%+#v", resp.ImageSyncModerationOutput)
@@ -112,7 +112,7 @@ func (client *moderationClient) TextAsyncModeration(input *TextModerationInput) 
 		APIResult
 		TextAsyncModerationOutput
 	}
-	if result, err := client.doPost("TextAsyncModeration", MODERATION_DOMAIN+"/v3/text/async", body, nil /*no param*/, &resp); err != nil {
+	if result, err := client.doPost("TextAsyncModeration", MODERATION_DOMAIN+"/kms-open/v3/text/async", body, nil /*no param*/, &resp); err != nil {
 		return nil, result, err
 	}
 	doLog(LEVEL_DEBUG, "text async moderation output:%+#v", resp.TextAsyncModerationOutput)
@@ -151,7 +151,7 @@ func (client *moderationClient) ImageAsyncModeration(input *ImageModerationInput
 		APIResult
 		ImageAsyncModerationOutput
 	}
-	if result, err := client.doPost("ImageAsyncModeration", MODERATION_DOMAIN+"/v3/image/async", body, nil /*no param*/, &resp); err != nil {
+	if result, err := client.doPost("ImageAsyncModeration", MODERATION_DOMAIN+"/kms-open/v3/image/async", body, nil /*no param*/, &resp); err != nil {
 		return nil, result, err
 	}
 	doLog(LEVEL_DEBUG, "image async moderation output:%+#v", resp.ImageAsyncModerationOutput)
@@ -194,7 +194,7 @@ func (client *moderationClient) AudioAsyncModeration(input *AudioModerationInput
 		APIResult
 		AudioAsyncModerationOutput
 	}
-	if result, err := client.doPost("AudioAsyncModeration", MODERATION_DOMAIN+"/v3/audio/async", body, nil /*no param*/, &resp); err != nil {
+	if result, err := client.doPost("AudioAsyncModeration", MODERATION_DOMAIN+"/kms-open/v3/audio/async", body, nil /*no param*/, &resp); err != nil {
 		return nil, result, err
 	}
 	doLog(LEVEL_DEBUG, "audio async moderation output:%+#v", resp.AudioAsyncModerationOutput)
@@ -237,7 +237,7 @@ func (client *moderationClient) VideoAsyncModeration(input *VideoModerationInput
 		APIResult
 		VideoAsyncModerationOutput
 	}
-	if result, err := client.doPost("VideoAsyncModeration", MODERATION_DOMAIN+"/v3/video/async", body, nil /*no param*/, &resp); err != nil {
+	if result, err := client.doPost("VideoAsyncModeration", MODERATION_DOMAIN+"/kms-open/v3/video/async", body, nil /*no param*/, &resp); err != nil {
 		return nil, result, err
 	}
 	doLog(LEVEL_DEBUG, "video async moderation output:%+#v", resp.VideoAsyncModerationOutput)
@@ -280,7 +280,7 @@ func (client *moderationClient) DocAsyncModeration(input *DocModerationInput) (o
 		APIResult
 		DocAsyncModerationOutput
 	}
-	if result, err := client.doPost("DocAsyncModeration", MODERATION_DOMAIN+"/v3/doc/async", body, nil /*no param*/, &resp); err != nil {
+	if result, err := client.doPost("DocAsyncModeration", MODERATION_DOMAIN+"/kms-open/v3/doc/async", body, nil /*no param*/, &resp); err != nil {
 		return nil, result, err
 	}
 	doLog(LEVEL_DEBUG, "doc async moderation output:%+#v", resp.DocAsyncModerationOutput)
