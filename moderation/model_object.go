@@ -226,88 +226,90 @@ type ImageModerationModelRisk struct {
 
 // 音频检测结果
 type AudioModerationResult struct {
-	Code              int                         `json:"code" description:"状态码。200:成功，408:音频下载失败，409:音频抽帧失败，410：音频asr失败，411:音频文本审核失败"`
-	Msg               string                      `json:"message"`
-	MachineSuggestion int                         `json:"machineSuggestion" description:"机审建议:1正常，2疑似违规，3违规"`
-	MachineTagL1      string                      `json:"machineTagL1" description:"机审一级标签，当machineSuggestion为1时，返回”正常“"`
-	MachineTagL2      string                      `json:"machineTagL2" description:"机审二级标签，当machineSuggestion为1时，为空"`
-	ContentId         string                      `json:"contentId" description:"审核时客户传入的contentId"`
-	UniqueId          string                      `json:"uniqueId" description:"该条数据对应的请求标识,由ScanA生成"`
-	RiskDetails       []AudioModerationRiskDetail `json:"riskDetails" description:"抽帧违规列表"`
-	AsrResults        []AsrResult                 `json:"asrResults" description:"asr文本信息"`
+	Code              int                         `json:"code"`              // 状态码
+	Msg               string                      `json:"message"`           // 状态码对应的消息
+	MachineSuggestion int                         `json:"machineSuggestion"` // 机审建议
+	MachineTagL1      string                      `json:"machineTagL1"`      // 机审一级标签，当machineSuggestion为1时，返回”正常“
+	MachineTagL2      string                      `json:"machineTagL2"`      // 机审二级标签，当machineSuggestion为1时，为空
+	ContentId         string                      `json:"contentId"`         // 审核时客户传入的contentId
+	UniqueId          string                      `json:"uniqueId"`          // 该条数据对应的请求标识,由ScanA生成
+	RiskDetails       []AudioModerationRiskDetail `json:"riskDetails"`       // 抽帧违规列表
+	AsrResults        []AsrResult                 `json:"asrResults"`        // asr文本信息
 }
 
 type AudioModerationRiskDetail struct {
-	BeginTime         int           `json:"beginTime" description:"抽帧开始时间，单位毫秒"`
-	EndTime           int           `json:"endTime" description:"抽帧结束时间，单位毫秒"`
-	MachineSuggestion int           `json:"machineSuggestion" description:"机审建议:1正常，2疑似违规，3违规"`
-	MachineTagL1      string        `json:"machineTagL1" description:"机审一级标签，当machineSuggestion为1时，返回”正常“"`
-	MachineTagL2      string        `json:"machineTagL2" description:"机审二级标签，当machineSuggestion为1时，为空"`
-	AllTags           []TextAllTag  `json:"allTags" description:"当前帧命中的所有标签信息"`
-	MatchedList       []MatchedList `json:"matchedList" description:"当前帧命中的关键词信息"`
+	BeginTime         int           `json:"beginTime"`         // 抽帧开始时间，单位毫秒
+	EndTime           int           `json:"endTime"`           // 抽帧结束时间，单位毫秒
+	Content           string        `json:"content"`           // 违规文本信息
+	MachineSuggestion int           `json:"machineSuggestion"` // 机审建议:1正常，2疑似违规，3违规
+	MachineTagL1      string        `json:"machineTagL1"`      // 机审一级标签，当machineSuggestion为1时，返回”正常“
+	MachineTagL2      string        `json:"machineTagL2"`      // 机审二级标签，当machineSuggestion为1时，为空
+	AllTags           []TextAllTag  `json:"allTags"`           // 当前帧命中的所有标签信息
+	MatchedList       []MatchedList `json:"matchedList"`       // 当前帧命中的关键词信息
 }
 
 // asr 识别文本信息
 type AsrResult struct {
-	BeginTime int    `json:"beginTime" description:"抽帧开始时间，单位毫秒"`
-	EndTime   int    `json:"endTime" description:"抽帧结束时间，单位毫秒"`
-	Content   string `json:"content" description:"asr文本信息"`
+	BeginTime int    `json:"beginTime"` // 抽帧开始时间，单位毫秒
+	EndTime   int    `json:"endTime"`   // 抽帧结束时间，单位毫秒
+	Content   string `json:"content"`   // asr文本信息
 }
 
 // 视频机审检测结果
 type VideoModerationResult struct {
-	Code               int                                `json:"code" description:"状态码。200:成功，412:视频下载失败，413:视频抽帧失败"`
-	Msg                string                             `json:"message"`
-	MachineSuggestion  int                                `json:"machineSuggestion" description:"机审建议:1正常，2疑似违规，3违规"`
-	MachineTagL1       string                             `json:"machineTagL1" description:"机审一级标签，当machineSuggestion为1时，返回”正常“"`
-	MachineTagL2       string                             `json:"machineTagL2" description:"机审二级标签，当machineSuggestion为1时，为空"`
-	ContentId          string                             `json:"contentId" description:"审核时客户传入的contentId"`
-	UniqueId           string                             `json:"uniqueId" description:"该条数据对应的请求标识,由ScanA生成"`
-	AudioRiskDetails   []AudioModerationRiskDetail        `json:"audioRiskDetails" description:"音频违规详情"`
-	PictureRiskDetails []VideoModerationPictureRiskDetail `json:"pictureRiskDetails" description:"图片违规详情"`
-	AsrResults         []AsrResult                        `json:"asrResults" description:"asr文本信息"`
+	Code               int                                `json:"code"`               // 状态码
+	Msg                string                             `json:"message"`            // 状态码对应的消息
+	MachineSuggestion  int                                `json:"machineSuggestion"`  // 机审建议:1正常，2疑似违规，3违规
+	MachineTagL1       string                             `json:"machineTagL1"`       // 机审一级标签，当machineSuggestion为1时，返回”正常“
+	MachineTagL2       string                             `json:"machineTagL2"`       // 机审二级标签，当machineSuggestion为1时，为空
+	ContentId          string                             `json:"contentId"`          // 审核时客户传入的contentId
+	UniqueId           string                             `json:"uniqueId"`           // 该条数据对应的请求标识,由ScanA生成
+	AudioRiskDetails   []AudioModerationRiskDetail        `json:"audioRiskDetails"`   // 音频违规详情
+	PictureRiskDetails []VideoModerationPictureRiskDetail `json:"pictureRiskDetails"` // 图片违规详情
+	AsrResults         []AsrResult                        `json:"asrResults"`         // asr文本信息
 }
 
 type VideoModerationPictureRiskDetail struct {
-	BeginTime         int                       `json:"beginTime" description:"抽帧开始时间，单位毫秒"`
-	EndTime           int                       `json:"endTime" description:"抽帧结束时间，单位毫秒"`
-	MachineSuggestion int                       `json:"machineSuggestion" description:"机审建议:1正常，2疑似违规，3违规"`
-	MachineTagL1      string                    `json:"machineTagL1" description:"机审一级标签，当machineSuggestion为1时，返回”正常“"`
-	MachineTagL2      string                    `json:"machineTagL2" description:"机审二级标签，当machineSuggestion为1时，为空"`
-	RiskDetails       ImageModerationRiskDetail `json:"riskDetails" description:"违规风险详情"`
-	AllTags           []ImageAllTag             `json:"allTags" description:"命中的所有违规标签以及其详情信息"`
+	BeginTime         int                       `json:"beginTime"`         // 抽帧开始时间，单位毫秒
+	EndTime           int                       `json:"endTime"`           // 抽帧结束时间，单位毫秒
+	Content           string                    `json:"content"`           // 违规图片url
+	MachineSuggestion int                       `json:"machineSuggestion"` // 机审建议
+	MachineTagL1      string                    `json:"machineTagL1"`      // 机审一级标签，当machineSuggestion为1时，返回”正常“
+	MachineTagL2      string                    `json:"machineTagL2"`      // 机审二级标签，当machineSuggestion为1时，为空
+	RiskDetails       ImageModerationRiskDetail `json:"riskDetails"`       // 违规风险详情
+	AllTags           []ImageAllTag             `json:"allTags"`           // 命中的所有违规标签以及其详情信息
 }
 
 // 文档检测结果
 type DocModerationResult struct {
-	Code               int                              `json:"code" description:"状态码。200:成功，414:文档下载失败，415:文档转化失败，416:文档预处理失败，417:文档图片审核失败，418:文档文本审核失败"`
-	Msg                string                           `json:"message"`
-	MachineSuggestion  int                              `json:"machineSuggestion" description:"机审建议:1正常，2疑似违规，3违规"`
-	MachineTagL1       string                           `json:"machineTagL1" description:"机审一级标签，当machineSuggestion为1时，返回”正常“"`
-	MachineTagL2       string                           `json:"machineTagL2" description:"机审二级标签，当machineSuggestion为1时，为空"`
-	ContentId          string                           `json:"contentId" description:"审核时客户传入的contentId"`
-	UniqueId           string                           `json:"uniqueId" description:"该条数据对应的请求标识,由ScanA生成"`
-	TextRiskDetails    []DocModerationTextRiskDetail    `json:"textRiskDetails" description:"文档文本违规详情"`
-	PictureRiskDetails []DocModerationPictureRiskDetail `json:"pictureRiskDetails" description:"文档图片违规详情"`
-	RiskPdfUrl         string                           `json:"riskPdfUrl" description:"违规标注文件链接"`
+	Code               int                              `json:"code"`               // 状态码
+	Msg                string                           `json:"message"`            // 状态码对应的消息
+	MachineSuggestion  int                              `json:"machineSuggestion"`  // 机审建议:1正常，2疑似违规，3违规
+	MachineTagL1       string                           `json:"machineTagL1"`       // 机审一级标签，当machineSuggestion为1时，返回”正常“
+	MachineTagL2       string                           `json:"machineTagL2"`       // 机审二级标签，当machineSuggestion为1时，为空
+	ContentId          string                           `json:"contentId"`          // 审核时客户传入的contentId
+	UniqueId           string                           `json:"uniqueId"`           // 该条数据对应的请求标识,由ScanA生成
+	TextRiskDetails    []DocModerationTextRiskDetail    `json:"textRiskDetails"`    // 文档文本违规详情
+	PictureRiskDetails []DocModerationPictureRiskDetail `json:"pictureRiskDetails"` // 文档图片违规详情
+	RiskPdfUrl         string                           `json:"riskPdfUrl"`         // 违规标注文件链接
 }
 
 type DocModerationTextRiskDetail struct {
-	PageIndex         int           `json:"pageIndex" description:"违规内容在文档中的页码数，从1开始计数"`
-	Content           string        `json:"content" description:"文本内容"`
-	MachineSuggestion int           `json:"machineSuggestion" description:"机审建议:1正常，2疑似违规，3违规"`
-	MachineTagL1      string        `json:"machineTagL1" description:"机审一级标签，当machineSuggestion为1时，返回”正常“"`
-	MachineTagL2      string        `json:"machineTagL2" description:"机审二级标签，当machineSuggestion为1时，为空"`
-	AllTags           []TextAllTag  `json:"allTags" description:"当前帧命中的所有标签信息"`
-	MatchedList       []MatchedList `json:"matchedList" description:"当前帧命中的关键词信息"`
+	PageIndex         int           `json:"pageIndex"`         // 违规内容在文档中的页码数，从1开始计数
+	Content           string        `json:"content"`           // 文本内容
+	MachineSuggestion int           `json:"machineSuggestion"` // 机审建议:1正常，2疑似违规，3违规
+	MachineTagL1      string        `json:"machineTagL1"`      // 机审一级标签，当machineSuggestion为1时，返回”正常“
+	MachineTagL2      string        `json:"machineTagL2"`      // 机审二级标签，当machineSuggestion为1时，为空
+	AllTags           []TextAllTag  `json:"allTags"`           // 当前帧命中的所有标签信息
+	MatchedList       []MatchedList `json:"matchedList"`       // 当前帧命中的关键词信息
 }
 
 type DocModerationPictureRiskDetail struct {
-	PageIndex         int                       `json:"pageIndex" description:"违规内容在文档中的页码数，从1开始计数"`
-	Content           string                    `json:"content" description:"违规图片临时链接"`
-	MachineSuggestion int                       `json:"machineSuggestion" description:"机审建议:1正常，2疑似违规，3违规"`
-	MachineTagL1      string                    `json:"machineTagL1" description:"机审一级标签，当machineSuggestion为1时，返回”正常“"`
-	MachineTagL2      string                    `json:"machineTagL2" description:"机审二级标签，当machineSuggestion为1时，为空"`
-	RiskDetails       ImageModerationRiskDetail `json:"riskDetails" description:"违规风险详情"`
-	AllTags           []ImageAllTag             `json:"allTags" description:"命中的所有违规标签以及其详情信息"`
+	PageIndex         int                       `json:"pageIndex"`         // 违规内容在文档中的页码数，从1开始计数
+	Content           string                    `json:"content"`           // 违规图片临时链接
+	MachineSuggestion int                       `json:"machineSuggestion"` // 机审建议:1正常，2疑似违规，3违规
+	MachineTagL1      string                    `json:"machineTagL1"`      // 机审一级标签，当machineSuggestion为1时，返回”正常“
+	MachineTagL2      string                    `json:"machineTagL2"`      // 机审二级标签，当machineSuggestion为1时，为空
+	RiskDetails       ImageModerationRiskDetail `json:"riskDetails"`       // 违规风险详情
+	AllTags           []ImageAllTag             `json:"allTags"`           // 命中的所有违规标签以及其详情信息
 }
