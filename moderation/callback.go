@@ -2,7 +2,6 @@ package moderation
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -25,51 +24,10 @@ func (client *moderationClient) ParseCallback(r *http.Request) (resp *CallbackDa
 	var v struct {
 		Code int    `json:"code"`
 		Msg  string `json:"message"`
-		callbackDataItemV3
+		CallbackDataItemV3
 	}
 	if err = json.Unmarshal(jb, &v); err != nil {
 		return nil, nil, err
-	}
-
-	// parse diffirent type result
-	switch v.ContentType {
-	case CONTENT_TYPE_TEXT:
-		var data TextModerationResult
-		if err := json.Unmarshal([]byte(v.TextModerationResult_), &data); err != nil {
-			doLog(LEVEL_ERROR, "pase different type string to struct failure:%v", err)
-			return nil, nil, err
-		}
-		v.TextModerationResult = &data
-	case CONTENT_TYPE_IMAGE:
-		var data ImageModerationResult
-		if err := json.Unmarshal([]byte(v.ImageModerationResult_), &data); err != nil {
-			doLog(LEVEL_ERROR, "pase different type string to struct failure:%v", err)
-			return nil, nil, err
-		}
-		v.ImageModerationResult = &data
-	case CONTENT_TYPE_AUDIO:
-		var data AudioModerationResult
-		if err := json.Unmarshal([]byte(v.AudioModerationResult_), &data); err != nil {
-			doLog(LEVEL_ERROR, "pase different type string to struct failure:%v", err)
-			return nil, nil, err
-		}
-		v.AudioModerationResult = &data
-	case CONTENT_TYPE_VIDEO:
-		var data VideoModerationResult
-		if err := json.Unmarshal([]byte(v.VideoModerationResult_), &data); err != nil {
-			doLog(LEVEL_ERROR, "pase different type string to struct failure:%v", err)
-			return nil, nil, err
-		}
-		v.VideoModerationResult = &data
-	case CONTENT_TYPE_DOC:
-		var data DocModerationResult
-		if err := json.Unmarshal([]byte(v.DocModerationResult_), &data); err != nil {
-			doLog(LEVEL_ERROR, "pase different type string to struct failure:%v", err)
-			return nil, nil, err
-		}
-		v.DocModerationResult = &data
-	default:
-		return nil, nil, fmt.Errorf("unknown type:%d", v.ContentType)
 	}
 
 	result = &APIResult{Code: v.Code, Msg: v.Msg}

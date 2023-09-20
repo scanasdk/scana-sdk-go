@@ -96,32 +96,23 @@ type DocAsyncModerationOutput struct {
 }
 
 // 回调参数
-type callbackDataItemV3 struct {
-	ImageModerationResult_ string `json:"imageModerationResult"`
-	TextModerationResult_  string `json:"textModerationResult"`
-	AudioModerationResult_ string `json:"audioModerationResult"`
-	VideoModerationResult_ string `json:"videoModerationResult"`
-	DocModerationResult_   string `json:"docModerationResult"`
-	CallbackDataItemV3
-}
-
 type CallbackDataItemV3 struct {
-	ContentId             string                 `json:"contentId"`      // 传递的contentId
-	UniqueId              string                 `json:"uniqueId"`       // 本条记录唯一id
-	ModerationType        int                    `json:"moderationType"` // 此次审核类型，1:仅机审, 2:机审+人审
-	ContentType           int                    `json:"contentType"`    // 审核的数据类型。1: 文本, 2: 图片, 3: 音频, 4: 视频, 5：文档
-	Suggestion            int                    `json:"suggestion"`     // 该次审核建议。1：正常，2: 疑似违规，3：违规
-	MachineTagL1          string                 `json:"machineTagL1"`   // 审核一级标签，当suggestion为1时，返回”正常“
-	MachineTagL2          string                 `json:"machineTagL2"`   // 审核一级标签，当suggestion为1时，为空
-	ManTagL1              string                 `json:"manTagL1"`       // 审核一级标签，当suggestion为1时，返回”正常“
-	ManTagL2              string                 `json:"manTagL2"`       // 审核一级标签，当suggestion为1时，为空
-	ImageModerationResult *ImageModerationResult `json:"-"`              // 该条数据的机审结果。当审核的数据为图片且开启了机审时，该字段存在
-	TextModerationResult  *TextModerationResult  `json:"-"`              // 该条数据的机审结果。当审核的数据为文本且开启了机审时，该字段存在
-	AudioModerationResult *AudioModerationResult `json:"-"`              // 该条数据的机审结果。当审核的数据为音频且开启了机审时，该字段存在
-	VideoModerationResult *VideoModerationResult `json:"-"`              // 该条数据的机审结果。当审核的数据为视频且开启了机审时，该字段存在
-	DocModerationResult   *DocModerationResult   `json:"-"`              // 该条数据的机审结果。当审核的数据为文档且开启了机审时，该字段存在
-	Extra                 string                 `json:"extra"`          // 透传字段，ScanA不会对该字段做任何处理
-
+	ContentId             string                 `json:"contentId"`                       // 传递的contentId
+	UniqueId              string                 `json:"uniqueId"`                        // 本条记录唯一id
+	ModerationType        int                    `json:"moderationType"`                  // 此次审核类型，1:仅机审, 2:机审+人审
+	ContentType           int                    `json:"contentType"`                     // 审核的数据类型。1: 文本, 2: 图片, 3: 音频, 4: 视频, 5：文档
+	Suggestion            int                    `json:"suggestion"`                      // 该次审核建议。1：正常，2: 疑似违规，3：违规
+	MachineTagL1          string                 `json:"machineTagL1"`                    // 审核一级标签，当suggestion为1时，返回”正常“
+	MachineTagL2          string                 `json:"machineTagL2"`                    // 审核一级标签，当suggestion为1时，为空
+	ManTagL1              string                 `json:"manTagL1"`                        // 审核一级标签，当suggestion为1时，返回”正常“
+	ManTagL2              string                 `json:"manTagL2"`                        // 审核一级标签，当suggestion为1时，为空
+	ImageModerationResult *ImageModerationResult `json:"imageModerationResult,omitempty"` // 该条数据的机审结果。当审核的数据为图片且开启了机审时，该字段存在
+	TextModerationResult  *TextModerationResult  `json:"textModerationResult,omitempty"`  // 该条数据的机审结果。当审核的数据为文本且开启了机审时，该字段存在
+	AudioModerationResult *AudioModerationResult `json:"audioModerationResult,omitempty"` // 该条数据的机审结果。当审核的数据为音频且开启了机审时，该字段存在
+	VideoModerationResult *VideoModerationResult `json:"videoModerationResult,omitempty"` // 该条数据的机审结果。当审核的数据为视频且开启了机审时，该字段存在
+	DocModerationResult   *DocModerationResult   `json:"docModerationResult,omitempty"`   // 该条数据的机审结果。当审核的数据为文档且开启了机审时，该字段存在
+	Extra                 string                 `json:"extra"`                           // 透传字段，ScanA不会对该字段做任何处理
+	Remark                *string                `json:"reamrk,omitempty"`                // 人审审核备注
 }
 
 // ===================================中间数据结构===================================
