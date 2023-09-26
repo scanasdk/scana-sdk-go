@@ -9,7 +9,7 @@ import "net/http"
  * @returns {*TextModerationOutput} output 检测结果
  * @returns {error} err 错误消息
  */
-func NewModerationClientV3(appid, secretKey string, configurers ...configurer) (*moderationClient, error) {
+func New(appid, secretKey string, configurers ...configurer) (*moderationClient, error) {
 	client := &moderationClient{
 		appid:     appid,
 		secretKey: secretKey,
