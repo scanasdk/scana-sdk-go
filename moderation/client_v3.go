@@ -1,6 +1,9 @@
 package moderation
 
-import "net/http"
+import (
+	"net/http"
+	"time"
+)
 
 /**
  * NewModerationClient 生成moderation client
@@ -39,6 +42,7 @@ func New(appid, secretKey string, configurers ...configurer) (*moderationClient,
 	client.conf = conf
 	client.httpClient = &http.Client{
 		Transport: conf.transport,
+		Timeout:   time.Duration(conf.timeout) * time.Second,
 	}
 
 	return client, nil

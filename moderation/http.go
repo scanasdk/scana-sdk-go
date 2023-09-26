@@ -79,10 +79,21 @@ func (client *moderationClient) doRequest(action, url, method string, data map[s
 	}
 	req.Header.Add("Content-Type", "application/json")
 
-	resp, err := client.httpClient.Do(req)
-	if err != nil {
-		doLog(LEVEL_ERROR, "http response failure:%s", err.Error())
-		return
+	var (
+		retryError error
+		resp       *http.Response
+	)
+	for i := 0; i < client.conf.maxRetryCount; i++ {
+		resp, retryError = client.httpClient.Do(req)
+		if err != nil {
+			doLog(LEVEL_ERROR, "http response failure:%s", err.Error())
+			continue
+		}
+
+		break
+	}
+	if retryError != nil {
+		return nil, nil, retryError
 	}
 	defer resp.Body.Close()
 
