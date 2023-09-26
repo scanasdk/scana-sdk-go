@@ -1,9 +1,9 @@
 package moderation
 
 const (
-	MODERATION_DOMAIN = "http://dev-newkmsapi.qixincha.com"
+	MODERATION_DOMAIN = "https://newkmsapi.qixincha.com"
 
-	DEFAULT_LOG_LEVEL = LEVEL_DEBUG //default log level
+	DEFAULT_LOG_LEVEL = LEVEL_ERROR //default log level
 )
 
 const (
