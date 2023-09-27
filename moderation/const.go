@@ -2,6 +2,16 @@ package moderation
 
 const (
 	MODERATION_DOMAIN = "https://newkmsapi.qixincha.com"
+
+	DEFAULT_LOG_LEVEL = LEVEL_ERROR //default log level
+)
+
+const (
+	CONTENT_TYPE_TEXT  = 1
+	CONTENT_TYPE_IMAGE = 2
+	CONTENT_TYPE_AUDIO = 3
+	CONTENT_TYPE_VIDEO = 4
+	CONTENT_TYPE_DOC   = 5
 )
 
 const (

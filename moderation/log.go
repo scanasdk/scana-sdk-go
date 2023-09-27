@@ -15,7 +15,7 @@ type logConfType struct {
 
 func getDefaultLogConf() logConfType {
 	return logConfType{
-		level: LEVEL_INFO,
+		level: DEFAULT_LOG_LEVEL,
 	}
 }
 
