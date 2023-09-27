@@ -74,7 +74,9 @@ func ExampleModeration(appId string, secret string, ty string, sync bool, input 
 		log.Println(err)
 		return err
 	}
-
+	if result != nil {
+		log.Printf("request failure code:%d,message:%s", result.Code, result.Msg)
+	}
 	log.Printf("output=== %+#v", output)
 
 	return nil
