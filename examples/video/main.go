@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	mc, err := moderation.New("62ac786311b92177337a933b", "a2f175a8-5373-11ed-9949-0242ac12000e", moderation.WithTimeout(10))
+	mc, err := moderation.New("app_id", "secret", moderation.WithTimeout(10))
 	if err != nil {
 		log.Println("new moderation client failure", err)
 		return
@@ -16,7 +16,7 @@ func main() {
 		BusinessId: "1813481786970231031",
 		Extra:      "GolangSDK-Test",
 		ContentId:  "golang-sdk-video",
-		URL:        "https://rs-videos.zsxq.com/a5k24jk3fvxzqxszla24lp07desj5tg2.m3u8?MtsHlsUriToken=ZXQ9MTcwMTA2NzQ2MzA0NSZlbmNyeXB0ZWQ9MCZ1aWQ9MCZ2aWQ9ODQ5Nzcmc2lnbj0zNjg5QTI5QzcxODA4N0FFMkNERUIwQkI0NzA2MkFEQw%3D%3D",
+		URL:        "https://www.baidu.com/2.m3u8",
 	})
 	if err != nil {
 		if result != nil {
