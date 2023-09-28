@@ -34,13 +34,14 @@ func main() {
 		Extra:      "extra",
 	})
 	if err != nil {
+		if result != nil {
+			log.Printf("moderation failure,code:%d,msg:%s\n", result.Code, result.Msg)
+		}
 		log.Println(err)
 		return
 	}
-	if result != nil {
-		log.Printf("moderation failure,code:%d,msg:%s\n", result.Code, result.Msg)
-	}
 
+	
 	log.Printf("output=== %+#v", *output)
 }
 

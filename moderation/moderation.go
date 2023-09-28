@@ -3,6 +3,7 @@ package moderation
 
 import (
 	"errors"
+	"net/http"
 )
 
 /**
@@ -40,6 +41,10 @@ func (client *moderationClient) TextSyncModeration(input *TextModerationInput) (
 
 	output = &resp.TextSyncModerationOutput
 	result = &resp.APIResult
+
+	if result.Code != http.StatusOK {
+		return output, result, errors.New(resp.Msg)
+	}
 
 	return output, result, nil
 }
@@ -79,6 +84,10 @@ func (client *moderationClient) ImageSyncModeration(input *ImageModerationInput)
 
 	output = &resp.ImageSyncModerationOutput
 	result = &resp.APIResult
+
+	if result.Code != http.StatusOK {
+		return output, result, errors.New(resp.Msg)
+	}
 
 	return output, result, nil
 }
@@ -120,6 +129,10 @@ func (client *moderationClient) TextAsyncModeration(input *TextModerationInput) 
 	output = &resp.TextAsyncModerationOutput
 	result = &resp.APIResult
 
+	if result.Code != http.StatusOK {
+		return output, result, errors.New(resp.Msg)
+	}
+
 	return output, result, nil
 }
 
@@ -158,6 +171,10 @@ func (client *moderationClient) ImageAsyncModeration(input *ImageModerationInput
 
 	output = &resp.ImageAsyncModerationOutput
 	result = &resp.APIResult
+
+	if result.Code != http.StatusOK {
+		return output, result, errors.New(resp.Msg)
+	}
 
 	return output, result, nil
 }
@@ -202,6 +219,10 @@ func (client *moderationClient) AudioAsyncModeration(input *AudioModerationInput
 	output = &resp.AudioAsyncModerationOutput
 	result = &resp.APIResult
 
+	if result.Code != http.StatusOK {
+		return output, result, errors.New(resp.Msg)
+	}
+
 	return output, result, nil
 }
 
@@ -245,6 +266,9 @@ func (client *moderationClient) VideoAsyncModeration(input *VideoModerationInput
 	output = &resp.VideoAsyncModerationOutput
 	result = &resp.APIResult
 
+	if result.Code != http.StatusOK {
+		return output, result, errors.New(resp.Msg)
+	}
 	return output, result, nil
 }
 
@@ -287,6 +311,10 @@ func (client *moderationClient) DocAsyncModeration(input *DocModerationInput) (o
 
 	output = &resp.DocAsyncModerationOutput
 	result = &resp.APIResult
+
+	if result.Code != http.StatusOK {
+		return output, result, errors.New(resp.Msg)
+	}
 
 	return output, result, nil
 }
