@@ -18,7 +18,7 @@ import (
 )
 
 func main() {
-	mc, err := moderation.NewModerationClient("appid", "secret", moderation.WithTimeout(10))
+	mc, err := moderation.New("appid", "secret", moderation.WithTimeout(10))
 	if err != nil {
 		log.Println("new moderation client failure", err)
 		return
