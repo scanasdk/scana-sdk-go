@@ -11,19 +11,22 @@ v3版本接口，包括图片、文本同步接口，图片、文本、音频、
 # usage
 
 ```go
+package main
+
 import (
 	"log"
 
-	"github.com/scanasdk/scana-sdk-go/moderation/v3"
+	"github.com/scanasdk/scana-sdk-go/moderation"
 )
 
 func main() {
-	mc, err := moderation.NewModerationClient("appid", "secret", moderation.WithTimeout(10))
+	mc, err := moderation.New("appid", "secret", moderation.WithTimeout(10))
 	if err != nil {
 		log.Println("new moderation client failure", err)
 		return
 	}
-	output, err := mc.TextSyncModeration(&moderation.TextSyncModerationInput{
+
+	output, result, err := mc.TextSyncModeration(&moderation.TextModerationInput{
 		Text: []moderation.Text{
 			{ContentId: "contentId", Data: "Hello World!"},
 		},
@@ -34,7 +37,11 @@ func main() {
 		log.Println(err)
 		return
 	}
+	if result != nil {
+		log.Printf("moderation failure,code:%d,msg:%s\n", result.Code, result.Msg)
+	}
 
 	log.Printf("output=== %+#v", *output)
 }
+
 ```
