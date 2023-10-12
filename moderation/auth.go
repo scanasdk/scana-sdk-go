@@ -50,8 +50,7 @@ func (client *moderationClient) Auth(businessId string) url.Values {
 // 接收回调后可以使用该方法校验正确性
 // values：query参数
 func (client *moderationClient) ValidAuth(values url.Values) error {
-	if !values.Has("appId") ||
-		!values.Has("businessId") ||
+	if !values.Has("businessId") ||
 		!values.Has("timestamp") ||
 		!values.Has(signKey) {
 		return errors.New("参数缺失")
