@@ -168,6 +168,16 @@ type ImageModerationResult struct {
 	UniqueId          string                    `json:"uniqueId"`          // 该条数据对应的请求标识,由ScanA生成
 	RiskDetails       ImageModerationRiskDetail `json:"riskDetails"`       // 违规风险详情
 	AllTags           []ImageAllTag             `json:"allTags"`           // 命中的所有违规标签以及其详情信息
+	MatchedList       []MatchedList             `json:"matchedList" description:"所有关键词信息"`
+	MatchedPics       []MatchedPic              `json:"matchedPics" description:"匹配黑名单图片"`
+}
+
+// 图片黑名单匹配
+type MatchedPic struct {
+	PicId       string `json:"picId" description:"picId"`
+	Tag         string `json:"tag" description:"该黑图命中的标签"`
+	Description string `json:"description" description:"命中的黑图片的说明信息"`
+	MatchedType int    `json:"matchedtype" description:"标识该黑图是1精准匹配还是2相似匹配constants.types.ImageBlackMatchedType"`
 }
 
 // 图片违规风险详情
