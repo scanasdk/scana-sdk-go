@@ -279,6 +279,7 @@ type VideoModerationPictureRiskDetail struct {
 	MachineTagL2      string                    `json:"machineTagL2"`      // 机审二级标签，当machineSuggestion为1时，为空
 	RiskDetails       ImageModerationRiskDetail `json:"riskDetails"`       // 违规风险详情
 	AllTags           []ImageAllTag             `json:"allTags"`           // 命中的所有违规标签以及其详情信息
+	MatchedList       []MatchedList             `json:"matchedList"`
 }
 
 // 文档检测结果
