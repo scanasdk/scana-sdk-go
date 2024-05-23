@@ -221,3 +221,46 @@ func main() {
 ```shell
 2023/09/28 15:36:34 output:&{1 bff58f65-fdd3-11ee-d413-fad23e91756e GolangSDK-Test}
 ```
+
+## [url异步检测](./examples/url/main.go)
+
+```go
+package main
+
+import (
+	"log"
+
+	"github.com/scanasdk/scana-sdk-go/moderation"
+)
+
+func main() {
+	mc, err := moderation.New("app_id", "secret", moderation.WithTimeout(10))
+	if err != nil {
+		log.Println("new moderation client failure", err)
+		return
+	}
+	output, result, err := mc.URLAsyncModeration(&moderation.URLModerationInput{
+		BusinessId: "business_id",
+		Extra:      "GolangSDK-Test",
+		ContentId:  "golang-sdk-doc",
+		URL:        "https://www.baidu.com/doc?attname=test.doc",
+	})
+	if err != nil {
+		if result != nil {
+			log.Printf("code:%d,message:%s", result.Code, result.Msg)
+			return
+		}
+		log.Println(err)
+		return
+	}
+
+	log.Printf("output:%v", output)
+}
+
+```
+
+输出:
+
+```shell
+2023/09/28 15:36:34 output:&{1 bff58f65-fdd3-11ee-d413-fad23e91756e GolangSDK-Test}
+```

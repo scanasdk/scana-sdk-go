@@ -84,12 +84,27 @@ type VideoAsyncModerationOutput struct {
 type DocModerationInput struct {
 	ContentId  string `json:"contentId"`  // 唯一id
 	Extra      string `json:"extra"`      // 额外信息，会在响应/回调中返回
-	BusinessId string `json:"businessId"` // 图片业务id
+	BusinessId string `json:"businessId"` // 业务id
 	URL        string `json:"url"`        // 文档链接
 }
 
-// 视频异步审核响应
+// 文档异步审核响应
 type DocAsyncModerationOutput struct {
+	ModerationType int    `json:"moderationType"` // 审核类型枚举
+	RequestId      string `json:"requestId"`      // 当次审核请求Id
+	Extra          string `json:"extra"`          // 客户透传字段，ScanA不会对该字段做任何处理，随结果返回给用户
+}
+
+// URL异步审核请求
+type URLModerationInput struct {
+	ContentId  string `json:"contentId"`  // 唯一id
+	Extra      string `json:"extra"`      // 额外信息，会在响应/回调中返回
+	BusinessId string `json:"businessId"` // 业务id
+	URL        string `json:"url"`        // url链接
+}
+
+// URL异步审核响应
+type URLAsyncModerationOutput struct {
 	ModerationType int    `json:"moderationType"` // 审核类型枚举
 	RequestId      string `json:"requestId"`      // 当次审核请求Id
 	Extra          string `json:"extra"`          // 客户透传字段，ScanA不会对该字段做任何处理，随结果返回给用户

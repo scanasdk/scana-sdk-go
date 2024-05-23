@@ -318,3 +318,50 @@ func (client *moderationClient) DocAsyncModeration(input *DocModerationInput) (o
 
 	return output, result, nil
 }
+
+/**
+ * URLAsyncModeration url异步审核请求
+ * @param {*DocModerationInput} input 请求参数
+ * @returns {*DocAsyncModerationOutput} output 检测结果
+ * @returns {*APIResult} result 请求失败可以通过该返回判定状态码
+ * @returns {error} err 错误消息
+ */
+func (client *moderationClient) URLAsyncModeration(input *URLModerationInput) (output *URLAsyncModerationOutput, result *APIResult, err error) {
+	if input == nil {
+		return nil, nil, errors.New("nil input")
+	}
+	if input.BusinessId == "" {
+		return nil, nil, errors.New("businessId is not set")
+	}
+	if input.URL == "" {
+		return nil, nil, errors.New("url is not set")
+	}
+
+	body := map[string]interface{}{
+		"appId":      client.appid,
+		"secretKey":  client.secretKey,
+		"businessId": input.BusinessId,
+		"contentId":  input.ContentId,
+		"extra":      input.Extra,
+		"url":        input.URL,
+	}
+
+	doLog(LEVEL_DEBUG, "url async moderation input:%+#v", body)
+	var resp struct {
+		APIResult
+		URLAsyncModerationOutput
+	}
+	if result, err := client.doPost("URLAsyncModeration", MODERATION_DOMAIN+"/kms-open/v3/url/async", body, nil /*no param*/, &resp); err != nil {
+		return nil, result, err
+	}
+	doLog(LEVEL_DEBUG, "url async moderation output:%+#v", resp.URLAsyncModerationOutput)
+
+	output = &resp.URLAsyncModerationOutput
+	result = &resp.APIResult
+
+	if result.Code != http.StatusOK {
+		return output, result, errors.New(resp.Msg)
+	}
+
+	return output, result, nil
+}

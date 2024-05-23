@@ -8,9 +8,9 @@ import (
 )
 
 func main() {
-	err := examples.ExampleModeration("appId", "secret", "video", true, &moderation.VideoModerationInput{
+	err := examples.ExampleModeration("appId", "secret", examples.CALL_TYPE_DOCUMENT, true, &moderation.VideoModerationInput{
 		ContentId:  "aaa",
-		URL:        "https://scanapi.qixincha.com/api/yobs/view/videos/kuaishou/scana-kuaishou-video-77IwV5uVAC.mp4",
+		URL:        "https://scanapi.qixincha.com/api/yobs/view/videos/kuaishouVAC.mp4",
 		BusinessId: "businessId",
 	})
 	if err != nil {
