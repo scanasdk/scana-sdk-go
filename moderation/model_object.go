@@ -114,7 +114,7 @@ type URLAsyncModerationOutput struct {
 type CallbackDataItemV3 struct {
 	ContentId             string                 `json:"contentId"`                       // 传递的contentId
 	UniqueId              string                 `json:"uniqueId"`                        // 本条记录唯一id
-	ModerationType        int                    `json:"moderationType"`                  // 此次审核类型，1:仅机审, 2:机审+人审
+	ModerationType        int                    `json:"moderationType"`                  // 此次审核类型，1:仅机审, 2:纯人审，3:机+人审
 	ContentType           int                    `json:"contentType"`                     // 审核的数据类型。1: 文本, 2: 图片, 3: 音频, 4: 视频, 5：文档
 	Suggestion            int                    `json:"suggestion"`                      // 该次审核建议。1：正常，2: 疑似违规，3：违规
 	MachineTagL1          string                 `json:"machineTagL1"`                    // 审核一级标签，当suggestion为1时，返回”正常“
